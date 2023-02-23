@@ -1,0 +1,38 @@
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import api from 'shared/api/movies-api';
+
+const Reviews = () => {
+  const [reviews, setReviews] = useState([]);
+  const { movieId } = useParams();
+
+  useEffect(() => {
+    if (movieId) {
+      const fetchCast = async () => {
+        try {
+          const reviews = await api.getMovieReviews(movieId);
+          setReviews(reviews);
+        } catch ({ data }) {
+          console.log(data.message);
+        }
+      };
+      fetchCast();
+    }
+  }, [movieId]);
+
+  const elements = reviews.length ? (
+    reviews.map(({ author_details, content, id }) => (
+      <li key={id}>
+        <h3>Author: {author_details.name}</h3>
+        <p>{content}</p>
+      </li>
+    ))
+  ) : (
+    <p>We don't have any reviews for this movie</p>
+  );
+
+  return <ul>{elements}</ul>;
+};
+
+export default Reviews;

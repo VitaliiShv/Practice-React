@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  padding: 10px;
+}
+
+.movieInfo {
+  padding: 10px;
+}
