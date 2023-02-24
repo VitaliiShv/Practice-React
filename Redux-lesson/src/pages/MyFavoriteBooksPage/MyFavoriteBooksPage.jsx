@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
+import { getFavoriteBooks } from "../../redux/selectors";
 
 const MyFavoriteBooksPage = () => {
 
-    const books = useSelector(store => {
-        const favoriteBooks = store.books.filter(book => book.favorite);
-        return favoriteBooks;
-    });
+    const books = useSelector(getFavoriteBooks);
     
     const elements = books.map(({ id, title, author }) => <li key={id}>Name:{title}. Author:{author}</li>);
 

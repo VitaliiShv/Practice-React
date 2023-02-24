@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-import { ADD_BOOK, DELETE_BOOK } from "./types";
+import { ADD_BOOK, DELETE_BOOK, SET_FILTER } from "./types";
 
 export const addBook = (payload) => {
   return {
@@ -15,6 +15,13 @@ export const addBook = (payload) => {
 export const deleteBook = (payload) => {
   return {
     type: DELETE_BOOK,
+    payload,
+  };
+};
+
+export const setFilter = (payload) => {
+  return {
+    type: SET_FILTER,
     payload,
   };
 };

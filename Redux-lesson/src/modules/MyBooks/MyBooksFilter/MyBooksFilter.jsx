@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 
 import styles from "../my-books.module.scss";
 
-const MyBooksFilter = ({handleChange}) => {
+const MyBooksFilter = ({handleChange, value}) => {
     return (
         <div className={styles.formGroup}>
             <label>Filter books</label>
-            <input name="filter" onChange={handleChange} placeholder="Filter books" />
+            <input value={value} name="filter" onChange={handleChange} placeholder="Filter books" />
         </div>
     )
 }

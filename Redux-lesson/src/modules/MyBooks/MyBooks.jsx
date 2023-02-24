@@ -5,20 +5,22 @@ import MyBooksForm from "./MyBooksForm/MyBooksForm";
 import MyBookList from "./MyBookList/MyBookList";
 import MyBooksFilter from "./MyBooksFilter/MyBooksFilter";
 
-import { addBook, deleteBook } from "../../redux/actions";
+import { addBook, deleteBook,setFilter } from "../../redux/actions";
+import { getAllBooks, getFilteredbooks, getFilter } from "../../redux/selectors";
 
 import styles from "./my-books.module.scss";
 
 const MyBooks = () => {
-    const books = useSelector(store => store.books);
-    const [filter, setFilter] = useState("");
+    const allBooks = useSelector(getAllBooks);
+    const filteredBooks = useSelector(getFilteredbooks);
+    const filter = useSelector(getFilter);
 
     const dispatch = useDispatch();
 
     const isDublicate = (title, author) => {
         const normalizedTitle = title.toLowerCase();
         const normalizedAuthor = author.toLowerCase();
-        const result = books.find(({ title, author }) => {
+        const result = allBooks.find(({ title, author }) => {
             return (title.toLowerCase() === normalizedTitle && author.toLowerCase() === normalizedAuthor)
         })
 
@@ -42,22 +44,9 @@ const MyBooks = () => {
         dispatch(action);
     }
 
-    const handleFilter = ({ target }) => setFilter(target.value);
+    const handleFilter = ({ target }) => dispatch(setFilter(target.value));
 
-    const getFilteredBooks = () => {
-        if (!filter) {
-            return books;
-        }
-
-        const normalizedFilter = filter.toLowerCase();
-        const result = books.filter(({ title, author }) => {
-            return (title.toLowerCase().includes(normalizedFilter) || author.toLowerCase().includes(normalizedFilter))
-        })
-
-        return result;
-    }
-
-    const filteredBooks = getFilteredBooks();
+    
     const isBooks = Boolean(filteredBooks.length);
 
     return (
@@ -69,7 +58,7 @@ const MyBooks = () => {
                     <MyBooksForm onSubmit={onAddBook} />
                 </div>
                 <div className={styles.block}>
-                    <MyBooksFilter handleChange={handleFilter} />
+                    <MyBooksFilter value={filter} handleChange={handleFilter} />
                     {isBooks && <MyBookList removeBook={onRemoveBook} items={filteredBooks} />}
                     {!isBooks && <p>No books in list</p>}
                 </div>
