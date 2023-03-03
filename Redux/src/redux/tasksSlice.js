@@ -17,7 +17,7 @@ const tasksSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  extrareducers: {
+  extraReducers: {
     [fetchTasks.pending]: handlePending,
     [addTask.pending]: handlePending,
     [deleteTask.pending]: handlePending,
